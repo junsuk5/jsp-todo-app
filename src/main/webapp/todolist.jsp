@@ -60,35 +60,23 @@ function remove(id) {
 		<div class="title">오늘 할 일</div>
 
 		<section class="form-wrapper">
-			<!-- <form method="post" action="addTodo.do" id="frm"> -->
 			<div class="form">
 				<input name="text" id="text" />
-				<!-- <div class="create-button"
-						onclick="document.getElementById('frm').submit();">추가</div> -->
 				<div class="create-button" onclick="addTodo();">추가</div>
 			</div>
-			<!-- </form> -->
 		</section>
 
 		<section class="todos-wrapper">
 			<c:forEach items="${todos}" var="todo">
 				<div class="todo-item" onclick="setDone(${todo.getId()});">
-					<div class="remove" onclick="event.stopPropagation(); remove(${todo.getId()});">&times;</div>
+					<div class="remove"
+						onclick="event.stopPropagation(); remove(${todo.getId()});">&times;</div>
 					<div class="todo-text ${todo.isChecked() ? 'checked' : ''}">${todo.getText()}</div>
 					<c:if test="${todo.isChecked() == true}">
 						<div class="check-mark">&#x2713;</div>
 					</c:if>
 				</div>
 			</c:forEach>
-			<!-- <div class="todo-item">
-				<div class="todo-text checked">숙제</div>
-			</div>
-			<div class="todo-item">
-				<div class="todo-text">요리</div>
-			</div>
-			<div class="todo-item">
-				<div class="todo-text">청소</div>
-			</div> -->
 		</section>
 	</div>
 </body>
