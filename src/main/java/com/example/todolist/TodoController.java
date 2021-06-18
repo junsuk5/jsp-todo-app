@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet(name = "TodoController", urlPatterns = {"*.do"})
 public class TodoController extends HttpServlet {
@@ -25,8 +26,6 @@ public class TodoController extends HttpServlet {
 		resp.setContentType("text/html; charset=utf-8");
 		req.setCharacterEncoding("utf-8");
 		
-		
-		
 		TodoRepository repository = TodoRepository.getInstance();
 		
 		if (command.equals("/addTodo.do")) {
@@ -35,24 +34,17 @@ public class TodoController extends HttpServlet {
 
 			repository.add(todo);
 			
-//			req.setAttribute("todos", repository.getAll());
-//			
-//			RequestDispatcher rd = req.getRequestDispatcher("todolist.jsp");
-//			rd.forward(req, resp);
-			
 		} else if (command.equals("/toggleTodo.do")) {
 			String id = req.getParameter("id");
 			repository.toggle(Long.parseLong(id));
 			
-//			req.setAttribute("todos", repository.getAll());
-			
-//			RequestDispatcher rd = req.getRequestDispatcher("todolist.jsp");
-//			rd.forward(req, resp);
 		} else if (command.equals("/removeTodo.do")) {
 			String id = req.getParameter("id");
 			repository.remove(Long.parseLong(id));
 		}
-		
+
+    HttpSession session = req.getSession();
+		session.setAttribute("todos", repository.getAll());
 	}
 
 }
